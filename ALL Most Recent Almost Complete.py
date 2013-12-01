@@ -899,7 +899,7 @@ def Combo_seq_screen_P1(b):
 def Combo_seq_screen_P2(c):
     ''' P2 TURN '''
     background_music.play(booba_loop_4,-1) 
-    a = 51.0
+    a = 50.0
     combo_P2 = 1
     Wait_Rect = pygame.Rect((180,109),(897,475))
     Screen.blit(Mash_Screen_Bg[index0],(0,0))
@@ -937,6 +937,9 @@ def Combo_seq_screen_P2(c):
     timer = pygame.time.Clock()
     player = []
     Comp = []
+    Screen.blit(Watch_Message,Area)
+    pygame.display.update()
+    time.delay(2000)
     
    # PUT A LEVEL INDICATOR
    # TIGHTEN UP THE COMBO SEQUENCE
