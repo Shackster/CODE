@@ -40,6 +40,10 @@ Tails1 = pygame.image.load("images/Tail1.png").convert_alpha()
 Sonic1 = pygame.image.load("images/Sonic1.png").convert_alpha()
 Shadow1 = pygame.image.load("images/Shadow1.png").convert_alpha()
 Scorpio1 = pygame.image.load("images/Scorpio1.png").convert_alpha()
+Tails4 = pygame.image.load("images/Tail4.png").convert_alpha()
+Sonic4 = pygame.image.load("images/Sonic4.png").convert_alpha()
+Shadow4 = pygame.image.load("images/Shadow4.png").convert_alpha()
+Scorpio4 = pygame.image.load("images/Scorpio4.png").convert_alpha()
 Tails2 = pygame.image.load("images/Tail2.png").convert_alpha()
 Sonic2 = pygame.image.load("images/Sonic2.png").convert_alpha()
 Shadow2 = pygame.image.load("images/Shadow2.png").convert_alpha()
@@ -48,12 +52,27 @@ Tails3 = pygame.image.load("images/Tail3.png").convert_alpha()
 Sonic3 = pygame.image.load("images/Sonic3.png").convert_alpha()
 Shadow3 = pygame.image.load("images/Shadow3.png").convert_alpha()
 Scorpio3 = pygame.image.load("images/Scorpio3.png").convert_alpha()
+Spaceclouds = pygame.image.load("images/Spaceclouds.jpg").convert_alpha()
+Spaceclouds1 = pygame.image.load("images/Spaceclouds1.jpg").convert_alpha()
+Spaceclouds2 = pygame.image.load("images/Spaceclouds2.jpg").convert_alpha()
+Spaceclouds3 = pygame.image.load("images/Spaceclouds3.jpg").convert_alpha()
+Spaceclouds4 = pygame.image.load("images/Spaceclouds4.jpg").convert_alpha()
+Spaceclouds5 = pygame.image.load("images/Spaceclouds5.jpg").convert_alpha()
+Spaceclouds6 = pygame.image.load("images/Spaceclouds6.jpg").convert_alpha()
+Spaceclouds7 = pygame.image.load("images/Spaceclouds7.jpg").convert_alpha()
 Space = pygame.image.load("images/space.jpg").convert_alpha()
+Space1 = pygame.image.load("images/space1.jpg").convert_alpha()
+Space2 = pygame.image.load("images/space2.jpg").convert_alpha()
+Space3 = pygame.image.load("images/space3.jpg").convert_alpha()
+Space4 = pygame.image.load("images/space4.jpg").convert_alpha()
+Space5 = pygame.image.load("images/space5.jpg").convert_alpha()
+Space6 = pygame.image.load("images/space6.jpg").convert_alpha()
+Space7 = pygame.image.load("images/space7.jpg").convert_alpha()
 Water = pygame.image.load("images/water.jpg").convert_alpha()
-Up = pygame.image.load("images/Up.png").convert_alpha()
-Down = pygame.image.load("images/Down.png").convert_alpha()
-Right = pygame.image.load("images/Right.png").convert_alpha()
-Left = pygame.image.load("images/Left.png").convert_alpha()
+Up = pygame.image.load("images/Up1.png").convert_alpha()
+Down = pygame.image.load("images/Down1.png").convert_alpha()
+Right = pygame.image.load("images/Right1.png").convert_alpha()
+Left = pygame.image.load("images/Left1.png").convert_alpha()
 Menu_Arrow1 = pygame.image.load("images/arrow.gif").convert_alpha()
 Menu_Arrow2 = pygame.image.load("images/arrow 1.gif").convert_alpha()
 Menu_Arrow3 = pygame.image.load("images/arrow 2.gif").convert_alpha()
@@ -72,11 +91,14 @@ Level_rectmed = pygame.Rect((451,618),(140,66))
 Level_recthard = pygame.Rect((878,618),(150,70))
 Level_Rect = [Level_recteasy,Level_rectmed,Level_recthard]
 Mash_Screen_Bg = [Mash_screen_bg1,Mash_screen_bg2,Mash_screen_bg3]
+TransitionP1 = [Space,Spaceclouds]
+TransitionP2 = [Space1,Spaceclouds1]
 P1_Win_Scr = [P1_Win_Scr1,P1_Win_Scr2,P1_Win_Scr3]
 P2_Win_Scr = [P2_Win_Scr1,P2_Win_Scr2,P2_Win_Scr3]
 Tie_Scr = [Tie_Scr1,Tie_Scr3,Tie_Scr3]
 Fighters = [Tails2,Sonic2,Shadow2,Scorpio2]
 Fighters2 = [Tails1,Sonic1,Shadow1,Scorpio1]
+Fighters3 = [Tails4,Sonic4,Shadow4,Scorpio4]
 CurrentFighterP1 = [Tails,Sonic,Shadow,Scorpio]
 CurrentFighterP2 = [Tails3,Sonic3,Shadow3,Scorpio3]
 Fighter_names = ["Tails","Sonic","Shadow","Scorpio"]
@@ -619,39 +641,79 @@ def Character_select_screen():
                     pygame.display.update() 
     return u,y
 
-def Combo_seq_screen_P1(b):
-    background_music.play(booba_loop_4,-1)
-    combo_P1 = 1
+def Transition_Box():
+    global index0
+    global index2
+    global Overlay
+    global Get
+    global Get_Ready
+    global Get_Ready_3
+    global Get_Ready_3_2
+    global Get_Ready_3_2_1
     index0 = random.randint(0,2)
+    index2 = random.randint(0,1)
+    Wait_Rect = pygame.Rect((180,109),(897,475))
     Screen.blit(Mash_Screen_Bg[index0],(0,0))
+    Screen.blit(TransitionP1[index2],Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(3000) # Delay by 3 Seconds before Player 1 starts 
+    Screen.blit(Mash_Screen_Bg[index0],(0,0))
+    if index2 == 0:
+        Overlay = Space2
+        Get = Space3
+        Get_Ready = Space4
+        Get_Ready_3 = Space5
+        Get_Ready_3_2 = Space6
+        Get_Ready_3_2_1 = Space7
+    elif index2 == 1:   
+        Overlay = Spaceclouds2
+        Get = Spaceclouds3
+        Get_Ready = Spaceclouds4
+        Get_Ready_3 = Spaceclouds5
+        Get_Ready_3_2 = Spaceclouds6
+        Get_Ready_3_2_1 = Spaceclouds7
+        
+    return index0,index2 
+        
+def Combo_seq_screen_P1(b):
+    ''' P1 TURN '''
+    background_music.play(booba_loop_4,-1)
+    a = 50.0 # This is for the timer
+    combo_P1 = 1 # Initial Combo value is 1
+    Transition_Box() 
     Area = pygame.Rect((100,100),(600,600))
-    Char = pygame.Rect((800,500),(300,300))
-    Combo = pygame.Rect((800,250),(50,50))
+    Char = pygame.Rect((800,389),(220,311))
+    Combo = pygame.Rect((1060,250),(50,50))
     UserInput = pygame.Rect((350,350),(853,683))
-    Timer = pygame.Rect((800,100),(110,75))
+    Combo_String = pygame.Rect((800,250),(260,50))
+    Timer = pygame.Rect((800,100),(80,75))
     Player = pygame.Rect((1000,100),(200,200))
-    Screen.blit(Fighters[b],Char)
-    pygame.draw.rect(Screen,(255,255,255),Combo)
-    combo_level = 0
+    Screen.blit(CurrentFighterP2[b],Char)
+    pygame.draw.rect(Screen,(64,224,208),Combo)
+    label1 = Font_type.render(str(combo_P1),15,(255,0,0))
+    Screen.blit(label1,Combo)
+    pygame.display.update(Combo)
+    label = Font_type.render(str(int(a)),15,(255,0,0))
+    pygame.draw.rect(Screen,(64,224,208),Timer)
+    Screen.blit(label, Timer)
+    pygame.display.update(Timer)
+    label2 = Font_type.render(str("Combo ~ x"),15,(255,0,0))
+    pygame.draw.rect(Screen,(64,224,208),Combo_String)
+    Screen.blit(label2, Combo_String)
+    pygame.display.update(Combo_String) 
     x = 0 #garbage value
     v = 1
     global m
     m = 1
-    index = 0
     timer = pygame.time.Clock()
-    #fps = 2.0 #modified later
     player = []
     Comp = []
-
-    ''' P1 TURN '''
-
-    a = 50.0
     Screen.blit(Watch_Message,Area)
     pygame.display.update()
     time.delay(2000)
     random.seed()
     index = random.randint(0,3)
-    pygame.draw.rect(Screen,(255,255,255),Area)
+    pygame.draw.rect(Screen,(64,224,208),Area)
     Screen.blit(Arrows[index],(random.randint(100,600),random.randint(100,600)))
     pygame.display.update()
     Comp.append(index)
@@ -663,14 +725,10 @@ def Combo_seq_screen_P1(b):
         Screen.blit(Go_Message,Area)
         pygame.display.update(Area)
         time.delay(2000)
-        pygame.draw.rect(Screen, (255,255,255),Area)
+        pygame.draw.rect(Screen, (64,224,208),Area)
     x = 0 #reset garbage variable
-    pygame.draw.rect(Screen,(255,255,255),Area)
+    pygame.draw.rect(Screen,(64,224,208),Area)
     pygame.display.update(Area)
-    label = Font_type.render(str(int(a)),15,(255,0,0))
-    pygame.draw.rect(Screen,(255,255,255),Timer)
-    Screen.blit(label, Timer)
-    pygame.display.update()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -716,13 +774,13 @@ def Combo_seq_screen_P1(b):
             Screen.blit(Watch_Message,Area)
             pygame.display.update(Area)
             time.delay(1000)
-            pygame.draw.rect(Screen, (255,255,255),Area)
+            pygame.draw.rect(Screen, (64,224,208),Area)
             time.delay(1000)
     if Comp == player:
         combo_P1 += 1
-        pygame.draw.rect(Screen,(255,255,255),Combo)
-        label = Font_type.render(str(combo_P1),15,(255,0,0))
-        Screen.blit(label,Combo)
+        pygame.draw.rect(Screen,(64,224,208),Combo)
+        label1 = Font_type.render(str(combo_P1),15,(255,0,0))
+        Screen.blit(label1,Combo)
         pygame.display.update()
     else:
         pygame.display.update()
@@ -752,7 +810,7 @@ def Combo_seq_screen_P1(b):
         while x <= 3:
             random.seed()
             index = random.randint(0,3)
-            pygame.draw.rect(Screen,(255,255,255),Area)
+            pygame.draw.rect(Screen,(64,224,208),Area)
             Screen.blit(Arrows[index],(random.randint(100,600),random.randint(100,600)))
             pygame.display.update()
             Comp.append(index)
@@ -764,15 +822,15 @@ def Combo_seq_screen_P1(b):
                 Screen.blit(Go_Message,Area)
                 pygame.display.update(Area)
                 time.delay(2000)
-                pygame.draw.rect(Screen, (255,255,255),Area)
+                pygame.draw.rect(Screen, (64,224,208),Area)
         x = 0 #reset garbage variable
-        pygame.draw.rect(Screen,(255,255,255),Area)
+        pygame.draw.rect(Screen,(64,224,208),Area)
         pygame.display.update(Area)
         while x <= 3:
             if a <= 0:
                 break
             label = Font_type.render(str(int(a)),15,(255,0,0))
-            pygame.draw.rect(Screen,(255,255,255),Timer)
+            pygame.draw.rect(Screen,(64,224,208),Timer)
             Screen.blit(label, Timer)
             pygame.display.update()
             for event in pygame.event.get():
@@ -820,14 +878,14 @@ def Combo_seq_screen_P1(b):
                 Screen.blit(Watch_Message,Area)
                 pygame.display.update(Area)
                 time.delay(1000)
-                pygame.draw.rect(Screen, (255,255,255),Area)
+                pygame.draw.rect(Screen, (64,224,208),Area)
                 time.delay(1000)
         x = 0
         if Comp == player:
             combo_P1 += 1
-            pygame.draw.rect(Screen,(255,255,255),Combo)
-            label = Font_type.render(str(combo_P1),15,(255,0,0))
-            Screen.blit(label,Combo)
+            pygame.draw.rect(Screen,(64,224,208),Combo)
+            label1 = Font_type.render(str(combo_P1),15,(255,0,0))
+            Screen.blit(label1,Combo)
             pygame.display.update()
         else:
             pygame.display.update()
@@ -841,41 +899,51 @@ def Combo_seq_screen_P1(b):
     return w
 
 def Combo_seq_screen_P2(c):
+    ''' P2 TURN '''
     background_music.play(booba_loop_4,-1) 
+    a = 51.0
     combo_P2 = 1
-    index1 = random.randint(0,2)
-    Screen.blit(Mash_Screen_Bg[index1],(0,0))
+    Wait_Rect = pygame.Rect((180,109),(897,475))
+    Screen.blit(Mash_Screen_Bg[index0],(0,0))
+    Screen.blit(TransitionP2[index2],Wait_Rect)
     pygame.display.update()
-    pygame.time.delay(1000) # delay b4 P2 start
+    pygame.time.delay(3000) # Delay by 3 Seconds before Player 2 starts 
+    Screen.blit(Mash_Screen_Bg[index0],(0,0))
     Area = pygame.Rect((100,100),(600,600))
-    Char = pygame.Rect((800,500),(300,300))
-    Combo = pygame.Rect((800,250),(50,50))
+    Char = pygame.Rect((800,389),(220,311))
+    Combo = pygame.Rect((1060,250),(50,50))
     UserInput = pygame.Rect((350,350),(853,683))
-    Timer = pygame.Rect((800,100),(110,75))
+    Timer = pygame.Rect((800,100),(70,65))
+    Combo_String = pygame.Rect((800,250),(260,50))
     Player = pygame.Rect((1000,100),(200,200))
-    pygame.draw.rect(Screen,(255,255,255),Area)
-    pygame.draw.rect(Screen,(255,255,255),Timer)
-    Screen.blit(Fighters[c],Char)
-    pygame.draw.rect(Screen,(255,255,255),Combo)
+    pygame.draw.rect(Screen,(64,224,208),Area)
+    pygame.draw.rect(Screen,(64,224,208),Timer)
+    pygame.draw.rect(Screen,(64,224,208),Combo)
+    label1 = Font_type.render(str(combo_P2),15,(255,0,0))
+    Screen.blit(label1,Combo)
+    pygame.display.update(Combo)
+    label = Font_type.render(str(int(a)),15,(255,0,0))
+    pygame.draw.rect(Screen,(64,224,208),Timer)
+    Screen.blit(label, Timer)
+    pygame.display.update(Timer)
+    label2 = Font_type.render(str("Combo ~ x"),15,(255,0,0))
+    pygame.draw.rect(Screen,(64,224,208),Combo_String)
+    Screen.blit(label2, Combo_String)
+    pygame.display.update(Combo_String)
+    Screen.blit(CurrentFighterP2[c],Char)
     pygame.display.update()
-    pygame.time.delay(2000) #delay before P2 start game
-    x = 0 #garbage value
+    x = 0 # garbage value
     global m
     m = 2
     index = 0
     timer = pygame.time.Clock()
-    #fps = 2.0 #modified later
     player = []
     Comp = []
-    a = 51.0
     
-
    # PUT A LEVEL INDICATOR
    # TIGHTEN UP THE COMBO SEQUENCE
    # PUT UP THE IMAGES THE DESIGN TEAM GAVE YOU
 
-
-    ''' P2 TURN '''
     while a >= 0: 
         for event in pygame.event.get():       
             if event.type == QUIT:
@@ -897,7 +965,7 @@ def Combo_seq_screen_P2(c):
         while x <= 3:
             random.seed()
             index = random.randint(0,3)
-            pygame.draw.rect(Screen,(255,255,255),Area)
+            pygame.draw.rect(Screen,(64,224,208),Area)
             Screen.blit(Arrows[index],(random.randint(100,600),random.randint(100,600)))
             pygame.display.update()
             Comp.append(index)
@@ -909,15 +977,15 @@ def Combo_seq_screen_P2(c):
                 Screen.blit(Go_Message,Area)
                 pygame.display.update(Area)
                 time.delay(2000)
-                pygame.draw.rect(Screen, (255,255,255),Area)
+                pygame.draw.rect(Screen, (64,224,208),Area)
         x = 0 #reset garbage variable
-        pygame.draw.rect(Screen,(255,255,255),Area)
+        pygame.draw.rect(Screen,(64,224,208),Area)
         pygame.display.update(Area)
         while x <= 3:
             if a <= 0:
                 break
             label = Font_type.render(str(int(a)),15,(255,0,0))
-            pygame.draw.rect(Screen,(255,255,255),Timer)
+            pygame.draw.rect(Screen,(64,224,208),Timer)
             Screen.blit(label, Timer)
             pygame.display.update()
             for event in pygame.event.get():
@@ -965,14 +1033,14 @@ def Combo_seq_screen_P2(c):
                 Screen.blit(Watch_Message,Area)
                 pygame.display.update(Area)
                 time.delay(1000)
-                pygame.draw.rect(Screen, (255,255,255),Area)
+                pygame.draw.rect(Screen, (64,224,208),Area)
                 time.delay(1000)
         x = 0
         if Comp == player:
             combo_P2 += 1
-            pygame.draw.rect(Screen,(255,255,255),Combo)
-            label = Font_type.render(str(combo_P2),15,(255,0,0))
-            Screen.blit(label,Combo)
+            pygame.draw.rect(Screen,(64,224,208),Combo)
+            label1 = Font_type.render(str(combo_P2),15,(255,0,0))
+            Screen.blit(label1,Combo)
             pygame.display.update()
         else:
             pygame.display.update()
@@ -985,10 +1053,33 @@ def Combo_seq_screen_P2(c):
     background_music.stop()
     return combo_P2
 
+def Get_Ready_Overlay():
+    Wait_Rect = pygame.Rect((180,109),(897,475))
+    Screen.blit(Overlay,Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(900)
+    Screen.blit(Get,Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(900)
+    Screen.blit(Get_Ready,Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(1000)
+    Screen.blit(Get_Ready_3,Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(950)
+    Screen.blit(Get_Ready_3_2,Wait_Rect)
+    pygame.display.update()
+    pygame.time.delay(950)
+    Screen.blit(Get_Ready_3_2_1,Wait_Rect)
+    pygame.display.update()
+
+
 def MASH_Screen(u,y,w,q):
     background_music.play(booba_loop_6,-1)
-    index = random.randint(0,2)
-    Screen.blit(Mash_Screen_Bg[index],(0,0))
+    Screen.blit(Mash_Screen_Bg[index0],(0,0))
+    Get_Ready_Overlay()
+    pygame.time.delay(950) # delay by 0.95 seconds before Player 1 starts 
+    Screen.blit(Mash_Screen_Bg[index0],(0,0))
     #global Player1Health
     #global Player2Health
     global m
@@ -1000,25 +1091,25 @@ def MASH_Screen(u,y,w,q):
     v = 1
     x = 1 
     while a >= 0 and (-290 < n <290):
-        Timer = pygame.Rect((580,0),(90,75))
+        Timer = pygame.Rect((580,0),(80,75))
         Playerbox1 = pygame.Rect((20,20),(50,50))
         Playerbox2 = pygame.Rect((1210,20),(50,50))
         Healthf1 = pygame.Rect((50,900),(150,20))
         Healthf2 = pygame.Rect((1080,900),(150,20))
         Charachter_box1 = pygame.Rect((300,700),(300,300))
         Charachter_box2 = pygame.Rect((680,700),(300,300))
-        Sprite_1 = pygame.Rect((80,300),(300,300))
-        Sprite_2 = pygame.Rect((960,300),(300,300))
-        Screen.blit(Fighters2[u],Sprite_1)#Charachter_box1)
-        Screen.blit(Fighters2[y],Sprite_2)#Charachter_box2)
+        Sprite_1 = pygame.Rect((80,225),(300,300))
+        Sprite_2 = pygame.Rect((960,225),(300,300))
+        Screen.blit(Fighters3[u],Sprite_1)#Charachter_box1)
+        Screen.blit(Fighters3[y],Sprite_2)#Charachter_box2)
         Screen.blit(Font_type.render(str("P1"),15,(255,0,0)),Playerbox1)
         Screen.blit(Font_type.render(str("P2"),15,(255,0,0)),Playerbox2)
         pygame.draw.rect(Screen,(0,0,0),Healthf1)
         pygame.draw.rect(Screen,(0,0,0),Healthf2)
-        #pygame.draw.rect(Screen,(255,255,255),Sprite_1)
-        #pygame.draw.rect(Screen,(255,255,255),Sprite_2)
-        player1_thug = pygame.Rect((350,450),(290+n,75))
-        player2_thug = pygame.Rect((640+n,450),(290-n,75))
+        #pygame.draw.rect(Screen,(64,224,208),Sprite_1)
+        #pygame.draw.rect(Screen,(64,224,208),Sprite_2)
+        player1_thug = pygame.Rect((350,350),(290+n,75))
+        player2_thug = pygame.Rect((640+n,350),(290-n,75))
         pygame.draw.rect(Screen,(255,0,0),player1_thug)
         pygame.draw.rect(Screen,(255,0,255),player2_thug)
 
@@ -1068,12 +1159,12 @@ def MASH_Screen(u,y,w,q):
                         v0 = 1.0
                     v = v0 
                     background_music.set_volume(v0)  
-        a -= float(1.0/35.0)
-        pygame.draw.rect(Screen,(255,255,255),Timer)
+        a -= float(1.0/32.0)
+        pygame.draw.rect(Screen,(64,224,208),Timer)
         label = Font_type.render(str(int(a)),15,(255,0,0))
         Screen.blit(label,Timer)
-        player1_thug = pygame.Rect((350,450),(290+n,75))
-        player2_thug = pygame.Rect((640+n,450),(290-n,75))
+        player1_thug = pygame.Rect((350,350),(290+n,75))
+        player2_thug = pygame.Rect((640+n,350),(290-n,75))
         pygame.draw.rect(Screen,(255,0,0),player1_thug)
         pygame.draw.rect(Screen,(255,0,255),player2_thug)
         pygame.display.update()
