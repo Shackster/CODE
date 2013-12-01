@@ -1,5 +1,3 @@
-# The following is a protoype that needs adjustment for real world application 
-
 import pygame
 from pygame import *
 import random
